@@ -1,13 +1,17 @@
 [package]
 name = "mi-api"
 version = "0.1.0"
-edition = "2021"
+edition = "2018"
+
+[[bin]]
+name = "mi-api"
+path = "src/main.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-#serde = "1.0.136"
-serde = { version = "1.0", features = ["derive"] }
+serde = "1.0.136"
+#serde = { version = "1.0", features = ["derive"] }
 serde_json = "1"
 futures = "0.3"
 actix-web = "4"

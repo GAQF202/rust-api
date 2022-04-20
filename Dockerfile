@@ -7,5 +7,3 @@ COPY . .
 RUN cargo build
 
 CMD cargo run 
-
-EXPOSE 8000

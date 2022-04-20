@@ -1,12 +1,12 @@
 use mongodb::{
-    bson::doc,
+    //bson::doc,
     sync::Client, event::command::CommandEventHandler,
 };
 
 use serde::{Deserialize, Serialize};
 use actix_cors::Cors;
 use actix_web::{get, web, App, HttpServer, Responder, http};
-use bson::{Bson};
+//use bson::{Bson};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Date{
@@ -39,7 +39,6 @@ async fn get_country_list()  -> impl Responder {
     let coll= db.collection::<Date>("Game_Logs"); 
     let cursor = coll.find(None, None).unwrap();
 
-    //vec.push(Date{code: "MY".to_string(), name: "Malaysia".to_string(), Ver:"holi".to_string()});
     for result in cursor{
         if let Ok(item) = result{
             vec.push(item);
@@ -71,42 +70,7 @@ async fn main() -> std::io::Result<()> {
             .route("/hello", web::get().to(get_country_list))
             .service(greet)
     })
-    .bind(("127.0.0.1", 8000/*8080*/))?
+    .bind(("0.0.0.0", 8000/*8080*/))?
     .run()
     .await
 }
-
-/*fn build_data(
-    code: String,
-    name: String,
-) -> Date {
-    Date {
-        code,
-        name,
-    }
-}
-
-fn user_from_document(document: Document) -> Date {
-    let mut _first_name = "".to_string();
-    let mut _last_name = "".to_string();
-    let mut _email = "".to_string();
-    let mut _user_name = "".to_string();
-    let mut _password = "".to_string();
-    if let Some(&Bson::String(ref first_name)) = document.get("firstName") {
-        _first_name = first_name.to_string();
-    }
-    if let Some(&Bson::String(ref last_name)) = document.get("lastName") {
-        _last_name = last_name.to_string();
-    }
-    if let Some(&Bson::String(ref email)) = document.get("email") {
-        _email = email.to_string();
-    }
-    if let Some(&Bson::String(ref user_name)) = document.get("username") {
-        _user_name = user_name.to_string();
-    }
-    if let Some(&Bson::String(ref password)) = document.get("password") {
-        _password = password.to_string();
-    }
-
- build_user(_first_name, _last_name, _email, _user_name, _password)
-}*/
